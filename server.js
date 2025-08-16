@@ -16,9 +16,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Enable CORS for all routes
 app.use((req, res, next) => {
-  res.setHeader('Content-Type', 'application/json');
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  if (req.url.startsWith('/api')) {
+    res.setHeader('Content-Type', 'application/json');
+  }
   next();
 });
 
@@ -45,9 +47,12 @@ app.get('/api/courses/:id', async (req, res) => {
   }
 });
 
-// Fallback route
-app.use((req, res) => {
-  res.status(404).json({ message: 'Endpoint not found' });
-});
+const PORT = process.env.PORT || 3000;
+
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
+}
 
 export default app;
