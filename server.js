@@ -6,7 +6,6 @@ import { getDataByQueryParams } from './utils/getDataByQueryParams.js';
 import { getDataByPathParams } from './utils/getDataByPathParams.js';
 
 const app = express();
-const PORT = process.env.PORT || 8080;
 
 // Resolve __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -51,6 +50,4 @@ app.use((req, res) => {
   res.status(404).json({ message: 'Endpoint not found' });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running successfully on http://localhost:${PORT}`);
-});
+export default app;
