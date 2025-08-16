@@ -3,7 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const categoryFilter = document.getElementById('category-filter');
     const levelFilter = document.getElementById('level-filter');
     
-    const API_BASE_URL = window.location.origin;
+    // Use the same origin for API calls
+    const API_BASE_URL = '';  // Empty string uses same domain
 
     const renderCourses = (courses) => {
         coursesContainer.innerHTML = '';
@@ -49,10 +50,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const response = await fetch(url);
+            console.log('Response status:', response.status); // Debug log
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             const courses = await response.json();
+            console.log('Courses received:', courses); // Debug log
             renderCourses(courses);
         } catch (error) {
             console.error('Failed to fetch courses:', error);
